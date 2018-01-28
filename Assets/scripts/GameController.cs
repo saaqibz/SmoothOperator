@@ -1,6 +1,7 @@
 ﻿using Assets.scripts;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	private const int NUM_COLS = 4;
@@ -9,6 +10,8 @@ public class GameController : MonoBehaviour {
 	public GameObject plugPrefab;
     public GameObject callPanelPrefab;
     public GameObject commandPanel;
+    public GameObject gameOverPanel;
+    public Text gameOverText;
 
     // Text Shit
     public GameObject topLabel;
@@ -196,5 +199,10 @@ public class GameController : MonoBehaviour {
         char[] returnThis = new char[4];
         cipher.CopyTo(returnThis);
         return returnThis;
+    }
+
+    public void GameOver(string message)
+    {
+
     }
 }

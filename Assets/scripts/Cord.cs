@@ -98,7 +98,7 @@ public class Cord : MonoBehaviour {
         transform.position = Vector3.Lerp(start, end, .5f);
         transform.LookAt(end);
         transform.localScale = new Vector3(transform.localScale.x, 0.05f,
-            Vector3.Distance(start, end) * 0.95f);
+            Vector3.Distance(start, end));
     }
 
 }
