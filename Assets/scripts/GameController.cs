@@ -134,7 +134,7 @@ public class GameController : MonoBehaviour {
     }
 
 	private IEnumerator<WaitForSeconds> removeBothPlugs() {
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		TriggerPlug (startPlug);
 		TriggerPlug (endPlug);
 	}
@@ -144,6 +144,7 @@ public class GameController : MonoBehaviour {
 		{
 			if (curRequest.getSolution().Equals(attemptedPlugCoordinates))
 			{
+                requestEnds.Remove(curRequest);
 				var waitTime = curRequest.CompleteCall();
 				print("Well done.");
 				score += Mathf.FloorToInt(1f + 5 * waitTime);
@@ -155,8 +156,8 @@ public class GameController : MonoBehaviour {
 			{
 				var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
 				var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
-				GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
-				print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+                print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+                GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
 			}
 				
 			// to do: remove curPlugCoordinate, kill the CallRequest UI element.
