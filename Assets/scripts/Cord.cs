@@ -80,4 +80,7 @@ public class Cord : MonoBehaviour {
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
             Vector3.Distance(start, end) * 0.95f);
     }
+
+
+    // HAHAHAHAHAH ALL YOUR MERGE ERRORS ARE BELONG TO ME!!!!!!!!!!111!1!!11!!11!!1!1!1!
 }
