@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public Text scoreText;
     public Text gameOverText;
 	private int score = 0;
+    public Fuckup bad_thing_happened;
 
     // Text Shit
     public GameObject topLabel;
@@ -159,6 +160,8 @@ public class GameController : MonoBehaviour {
 				var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
 				var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
                 print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+                bad_thing_happened.gameObject.SetActive(true);
+                bad_thing_happened.DisplayFuckup(attemptedPlugCoordinates, curRequest.getSolution(), colSyms, rowSyms);
                 GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
 			}
 				
