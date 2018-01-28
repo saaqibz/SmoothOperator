@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
     public GameObject callPanelPrefab;
     public GameObject commandPanel;
     public GameObject gameOverPanel;
+    public Text scoreText;
     public Text gameOverText;
 	private int score = 0;
 
@@ -147,7 +148,8 @@ public class GameController : MonoBehaviour {
                 requestEnds.Remove(curRequest);
 				var waitTime = curRequest.CompleteCall();
 				print("Well done.");
-				score += Mathf.FloorToInt(1f + 5 * waitTime);
+				score += Mathf.FloorToInt(10f + 50 * waitTime);
+                scoreText.text = "Score: " + score;
 				CreatePlugGoal();
 				StartCoroutine(removeBothPlugs ());
 				Debug.Log (score);

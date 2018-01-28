@@ -64,7 +64,7 @@ public class CallRequest : MonoBehaviour {
     {
         // make it go Ding
         Destroy(gameObject);
-		return waitTime;
+		return FractionOfTimeRemaining();
     }
 
     private void TimeOver()
@@ -72,5 +72,10 @@ public class CallRequest : MonoBehaviour {
         print("You took too long. Bad employee!");
         gameController.TimeOver(this);
         Destroy(gameObject);
+    }
+
+    public float FractionOfTimeRemaining()
+    {
+        return (waitTime + countdownStartTime - Time.time) / waitTime;
     }
 }
