@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Assets.scripts
 {
-    class Coordinate
+    public class Coordinate
     {
         static Random rand = new Random(); // because creating multiple Randoms in quick succession gives them the seed value. We tend to make two of these at once.
         public int x;
         public int y;
         public Coordinate()
         {
-            x = rand.Next(0,3);
-            y = rand.Next(0,3);
+            x = rand.Next(0,4);
+            y = rand.Next(0,4);
         }
 
         public Coordinate(int x, int y)

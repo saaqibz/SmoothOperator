@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,27 +16,22 @@ public class CallRequest : MonoBehaviour {
     public Text tRow2;
     public Slider waitSlider;
 
-    private GameObject gameController;
+    private GameController gameController;
 
-    public CallRequest(char col1, char row1, char col2, char row2, float patience)
+    private PlugEnds solution;
+    private char[] colCipher;
+    private char[] rowCipher;
+
+    public void StartRequest(PlugEnds answer, char[] colNames, char[] rowNames, float patience)
     {
-        tCol1.text = col1.ToString();
-        tRow1.text = row1.ToString();
-        tCol2.text = col2.ToString();
-        tRow2.text = row2.ToString();
+        colCipher = colNames;
+        rowCipher = rowNames;
+        solution = answer;
 
-        countdownStartTime = Time.time;
-        waitTime = patience;
-
-        waitSlider.value = 1f;
-    } // possibly useless for Object.Instantiate
-
-    public void StartRequest(char col1, char row1, char col2, char row2, float patience)
-    {
-        tCol1.text = col1.ToString();
-        tRow1.text = row1.ToString();
-        tCol2.text = col2.ToString();
-        tRow2.text = row2.ToString();
+        tCol1.text = colCipher[solution.first.x].ToString();
+        tRow1.text = rowCipher[solution.first.y].ToString();
+        tCol2.text = colCipher[solution.second.x].ToString();
+        tRow2.text = rowCipher[solution.second.y].ToString();
 
         countdownStartTime = Time.time;
         waitTime = patience;
@@ -43,19 +39,27 @@ public class CallRequest : MonoBehaviour {
         waitSlider.value = 1f;
     }
 
+    public PlugEnds getSolution()
+    {
+        return solution;
+    }
+
     // Use this for initialization
     void Start() {
-        gameController = GameObject.Find("GameController");
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         waitSlider.value = (waitTime + countdownStartTime - Time.time) / waitTime; // show percentage of time remaining
-
+        if (waitSlider.value <= 0)
+        {
+            TimeOver();
+        }
         // should implement wait timer freezing while call is connected?
 	}
 
-    private void CompleteCall()
+    public void CompleteCall()
     {
         // make it go Ding
         Destroy(gameObject);
@@ -64,6 +68,7 @@ public class CallRequest : MonoBehaviour {
     private void TimeOver()
     {
         print("You took too long. Bad employee!");
+        gameController.TimeOver(this);
         Destroy(gameObject);
     }
 }

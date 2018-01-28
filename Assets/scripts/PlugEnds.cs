@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.scripts
 {
-    class PlugEnds
+    public class PlugEnds
     {
         public Coordinate first;
         public Coordinate second;

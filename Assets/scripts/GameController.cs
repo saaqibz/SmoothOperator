@@ -23,13 +23,13 @@ public class GameController : MonoBehaviour {
 
     public Cord cord;
 
-    private List<PlugEnds> requestEnds;
+    private List<CallRequest> requestEnds;
 
     private List<GameObject> plugs = new List<GameObject>();
 
     // Use this for initialization
     void Start () {
-        requestEnds = new List<PlugEnds>();
+        requestEnds = new List<CallRequest>();
 		InstantiatePlugs ();
 
         rowSyms = new char[] { '1', '2', '3', '4' };
@@ -59,9 +59,11 @@ public class GameController : MonoBehaviour {
     {
         var goalPlug = new PlugEnds();
         print("Okay, now connect " + goalPlug.first.CoordString() + " to " + goalPlug.second.CoordString());
-        requestEnds.Add(goalPlug);
         GameObject newCallPanel = Instantiate(callPanelPrefab, commandPanel.transform);
-        newCallPanel.GetComponent<CallRequest>().StartRequest(colSyms[goalPlug.first.x], rowSyms[goalPlug.first.y], colSyms[goalPlug.second.x], rowSyms[goalPlug.second.y], 20f);
+        CallRequest call = newCallPanel.GetComponent<CallRequest>();
+        call.StartRequest(goalPlug, colSyms, rowSyms, 20f);
+
+        requestEnds.Add(call);
     }
 
     public void TriggerPlug(GameObject plug)
@@ -100,7 +102,6 @@ public class GameController : MonoBehaviour {
                 if (isValidTransmission(plugs))
                 {
                     print("Well done.");
-                    requestEnds.Clear();
                     CreatePlugGoal();
                 }
                 else
@@ -137,10 +138,11 @@ public class GameController : MonoBehaviour {
      */
     private bool isValidTransmission(PlugEnds attemptedPlugCoordinates)
     {
-        foreach (PlugEnds curPlugCoordinate in requestEnds)
+        foreach (CallRequest curRequest in requestEnds)
         {
-            if (curPlugCoordinate.Equals(attemptedPlugCoordinates))
+            if (curRequest.getSolution().Equals(attemptedPlugCoordinates))
             {
+                curRequest.CompleteCall();
                 return true;
             }
 
@@ -148,5 +150,12 @@ public class GameController : MonoBehaviour {
             // and play a ding ding sound
         }
         return false;
+    }
+
+    public void TimeOver(CallRequest unhappyCustomer)
+    {
+        print("Time over, you lazy fool");
+        requestEnds.Remove(unhappyCustomer);
+        CreatePlugGoal();
     }
 }
