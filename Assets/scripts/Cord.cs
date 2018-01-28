@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class Cord : MonoBehaviour {
+    private const float CORD_Z_AXIS = 2.363f;
 
     private Transform startPos;
     private Transform endPos;
@@ -10,20 +11,43 @@ public class Cord : MonoBehaviour {
         gameObject.SetActive(false);
     }
 	
-	// Update is called once per frame
-	void Update () {
-        Vector3 mousePos = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        
+    private Vector3 getMousePosition()
+    {
+        var boardCenterPos = new Vector3(-0.127f, 4.512f, CORD_Z_AXIS);
+
+        // FIXME: Need to fix plane or something about this script to properly get the mouse position
+        Plane plane = new Plane(boardCenterPos, 0);
+
+        float dist;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (plane.Raycast(ray, out dist))
+        {
+            return ray.GetPoint(dist);
+        }
+        else
+        {
+            return boardCenterPos;
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
+        var mousePos = getMousePosition();
+        Debug.Log("Mouse: " + mousePos);
+
         if (startPos == null && endPos == null)
         {
-        } else if (startPos == null)
+            // Do Nothing
+        }
+        else if (startPos == null)
         {
             drawCord(endPos.position, mousePos);
-        } else if (endPos == null)
+        }
+        else if (endPos == null)
         {
             drawCord(startPos.position, mousePos);
-        } else
+        }
+        else
         {
             drawCord(startPos.position, endPos.position);
         }
@@ -68,8 +92,8 @@ public class Cord : MonoBehaviour {
 
     private void drawCord(Vector3 start, Vector3 end)
     {
-        start.z = 2.363f;
-        end.z = 2.363f;
+        start.z = CORD_Z_AXIS;
+        end.z = CORD_Z_AXIS;
 
         transform.position = Vector3.Lerp(start, end, .5f);
         transform.LookAt(end);
