@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour {
 
 	public GameObject plugPrefab;
     public GameObject callPanelPrefab;
+    public GameObject commandPanel;
 
     // symbols for the rows and columns
     public char[] rowSyms;
@@ -33,6 +34,8 @@ public class GameController : MonoBehaviour {
 
         rowSyms = new char[] { '1', '2', '3', '4' };
         colSyms = new char[] { 'A', 'B', 'C', 'D' };
+
+        CreatePlugGoal();
     }
 
     private void ShouldShowPlug(GameObject plug, bool show)
@@ -57,6 +60,8 @@ public class GameController : MonoBehaviour {
         var goalPlug = new PlugEnds();
         print("Okay, now connect " + goalPlug.first.CoordString() + " to " + goalPlug.second.CoordString());
         requestEnds.Add(goalPlug);
+        GameObject newCallPanel = Instantiate(callPanelPrefab, commandPanel.transform);
+        newCallPanel.GetComponent<CallRequest>().StartRequest(colSyms[goalPlug.first.x], rowSyms[goalPlug.first.y], colSyms[goalPlug.second.x], rowSyms[goalPlug.second.y], 20f);
     }
 
     public void TriggerPlug(GameObject plug)
@@ -128,6 +133,7 @@ public class GameController : MonoBehaviour {
     /*
      * Validate a plugging attempt. If this is valid, we need to let the world know that someone succeeded.
      *      If it is not valid, do nothing.
+     *      
      */
     private bool isValidTransmission(PlugEnds attemptedPlugCoordinates)
     {
@@ -137,6 +143,9 @@ public class GameController : MonoBehaviour {
             {
                 return true;
             }
+
+            // to do: remove curPlugCoordinate, kill the CallRequest UI element.
+            // and play a ding ding sound
         }
         return false;
     }

@@ -483,6 +483,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b27818a77b3cc63458ed1fa80637be3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waitTime: 20
+  tCol1: {fileID: 114030478057904784}
+  tRow1: {fileID: 114872191560222982}
+  tCol2: {fileID: 114199787570107472}
+  tRow2: {fileID: 114476465688962386}
+  waitSlider: {fileID: 114155954035539358}
 --- !u!114 &114860199909753000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -648,7 +654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 132.5, y: 10}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224307435353816382

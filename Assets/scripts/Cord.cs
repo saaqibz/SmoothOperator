@@ -33,7 +33,7 @@ public class Cord : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
         var mousePos = getMousePosition();
-        Debug.Log("Mouse: " + mousePos);
+        // Debug.Log("Mouse: " + mousePos);
 
         if (startPos == null && endPos == null)
         {
