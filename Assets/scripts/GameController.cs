@@ -21,7 +21,9 @@ public class GameController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        requestEnds = new List<PlugEnds>();
 		InstantiatePlugs ();
+        createPlugGoal();
 	}
 
     private void shouldShowPlug(GameObject plug, bool show)
@@ -44,6 +46,7 @@ public class GameController : MonoBehaviour {
     private void CreatePlugGoal()
     {
         var goalPlug = new PlugEnds();
+        print("Okay, now connect " + goalPlug.first.CoordString() + " to " + goalPlug.second.CoordString());
         requestEnds.Add(goalPlug);
     }
 
@@ -69,14 +72,28 @@ public class GameController : MonoBehaviour {
             var plugs = ToPlugEnds();
             if (plugs != null)
             {
+                endPlug = plug;
+                cord.SetEnd(plug.transform);
+            }
+
+            // connection is completed, let's see if the player got it right...
+            if (startPlug != null && endPlug != null) // !(plugs == null) will always return true
+            {
+                var plugs = toPlugEnds();
                 if (isValidTransmission(plugs))
                 {
+                    print("Well done.");
                     requestEnds.Clear();
                     CreatePlugGoal();
                 }
+                else
+                {
+                    var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
+                    var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
+                    print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+                }
             }
-
-		}
+        }
 
         
 		var _startPlug = (startPlug != null) ? startPlug.GetComponent<Plug> ().ToString () : "null";
