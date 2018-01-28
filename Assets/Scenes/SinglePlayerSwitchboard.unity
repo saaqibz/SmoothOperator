@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42996112, g: 0.4646579, b: 0.49593723, a: 1}
+  m_IndirectSpecularColor: {r: 0.42996144, g: 0.46465814, b: 0.4959377, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -220,6 +220,24 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!1 &227835510 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1243734206999144, guid: 5392be29194a6024f9784c28dc7616a6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2091001835}
+--- !u!114 &227835511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 227835510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0162f451d7fd2a4ca8f5308732043d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singlePlayerBool: 1
+  countText: {fileID: 1093155502}
 --- !u!1 &256371765
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +540,12 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1093155502 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114991982477539744, guid: 5392be29194a6024f9784c28dc7616a6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2091001835}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1273669897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,6 +1326,7 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114903465048688038, guid: 5392be29194a6024f9784c28dc7616a6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5392be29194a6024f9784c28dc7616a6, type: 2}
   m_IsPrefabParent: 0
