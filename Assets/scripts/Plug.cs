@@ -6,8 +6,8 @@ public class Plug : MonoBehaviour {
 	
 	public static GameObject gameController;
 
-	private int row = -1;
-	private int col = -1;
+	public int row = -1;
+	public int col = -1;
 
 	// Use this for initialization
 	void Start () {
