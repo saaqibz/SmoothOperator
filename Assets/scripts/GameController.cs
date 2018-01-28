@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
         CreatePlugGoal();
 	}
 
-    private void shouldShowPlug(GameObject plug, bool show)
+    private void ShouldShowPlug(GameObject plug, bool show)
     {
         plug.GetComponent<MeshRenderer>().enabled = show;
     }
@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour {
 			for (var row = 0; row < NUM_ROWS; ++row) {
 				var position = new Vector3(-4.254f + colSpace * col, 3.223f + -1 * rowSpace * row, 2.571f);		
 				var plug = Instantiate(plugPrefab, position, Quaternion.Euler(90, 0, 0));
-                shouldShowPlug(plug, false);
+                ShouldShowPlug(plug, false);
                 plug.GetComponent<Plug>().setPosition(col, row);
                 plugs.Add(plug);
 			}
@@ -55,11 +55,13 @@ public class GameController : MonoBehaviour {
         if (plug == startPlug)
         {
             startPlug = null;
+            ShouldShowPlug(plug, false);
             cord.RemoveStart();
         }
         else if (plug == endPlug)
         {
             endPlug = null;
+            ShouldShowPlug(plug, false);
             cord.RemoveEnd();
         }
         else if (!(startPlug != null && endPlug != null)) // i.e. only one plug is null and we're about to finish a connection
@@ -67,11 +69,13 @@ public class GameController : MonoBehaviour {
             if (startPlug == null)
             {
                 startPlug = plug;
+                ShouldShowPlug(plug, true);
                 cord.SetStart(plug.transform);
             }
             else // endPlug == null; there's no other option
             {
                 endPlug = plug;
+                ShouldShowPlug(plug, true);
                 cord.SetEnd(plug.transform);
             }
 
