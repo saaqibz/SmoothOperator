@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42996112, g: 0.4646579, b: 0.49593723, a: 1}
+  m_IndirectSpecularColor: {r: 0.42996144, g: 0.46465814, b: 0.4959377, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -941,6 +941,9 @@ MonoBehaviour:
   callPanelPrefab: {fileID: 1431818836150318, guid: ee4be123dbeeb7547b8deac7987f52fe,
     type: 2}
   commandPanel: {fileID: 134198036}
+  topLabel: {fileID: 2069163057}
+  leftLabel: {fileID: 762299936}
+  rightLabel: {fileID: 2013498852}
   rowSyms: 
   colSyms: 
   colSpace: 1.89
@@ -1152,7 +1155,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2069163057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.79, y: 5.58, z: 0.98}
+  m_LocalPosition: {x: -4.27, y: 5.54, z: 0.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1869630017}
@@ -1167,7 +1170,7 @@ TextMesh:
   m_GameObject: {fileID: 2069163057}
   m_Text: X Y W Z
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: 0.89
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 1
@@ -1175,7 +1178,7 @@ TextMesh:
   m_FontSize: 12
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 70ad565693f9d284cb312ed47a93c16c, type: 3}
+  m_Font: {fileID: 12800000, guid: 1316a80a10a0cea4281323d293ec2bbe, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4282071877
@@ -1193,7 +1196,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 70ad565693f9d284cb312ed47a93c16c, type: 3}
+  - {fileID: 2100000, guid: 1316a80a10a0cea4281323d293ec2bbe, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -10,6 +10,11 @@ public class GameController : MonoBehaviour {
     public GameObject callPanelPrefab;
     public GameObject commandPanel;
 
+    // Text Shit
+    public GameObject topLabel;
+    public GameObject leftLabel;
+    public GameObject rightLabel;
+
     // symbols for the rows and columns
     public char[] rowSyms;
     public char[] colSyms;
@@ -27,14 +32,19 @@ public class GameController : MonoBehaviour {
 
     private List<GameObject> plugs = new List<GameObject>();
 
+    static System.Random rand = new System.Random();
+
     // Use this for initialization
     void Start () {
         requestEnds = new List<CallRequest>();
 
-        rowSyms = new char[] { '1', '2', '3', '4' };
-        colSyms = new char[] { 'A', 'B', 'C', 'D' };
+        rowSyms = GenerateCipher() ;
+        colSyms = GenerateCipher();
 
-        
+        topLabel.GetComponent<TextMesh>().text = colSyms[0] + " " + colSyms[1] + " " + colSyms[2] + " " + colSyms[3];
+        leftLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
+        rightLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
+
     }
 
     private void ShouldShowPlug(GameObject plug, bool show)
@@ -168,5 +178,23 @@ public class GameController : MonoBehaviour {
     public void StartGameMultiPlayer()
     {
         CreatePlugGoal();
+    }
+
+    public char[] GenerateCipher()
+    {
+        HashSet<char> cipher = new HashSet<char>();
+        var i = 0;
+        while(i < 4)
+        {
+            char thing = (char)(rand.Next(65, 91));
+            if (!cipher.Contains(thing))
+            {
+                cipher.Add(thing);
+                i++;
+            }
+        }
+        char[] returnThis = new char[4];
+        cipher.CopyTo(returnThis);
+        return returnThis;
     }
 }
