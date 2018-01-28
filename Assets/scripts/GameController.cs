@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour {
         rowSyms = new char[] { '1', '2', '3', '4' };
         colSyms = new char[] { 'A', 'B', 'C', 'D' };
 
-        CreatePlugGoal();
+        
     }
 
     private void ShouldShowPlug(GameObject plug, bool show)
@@ -155,6 +155,18 @@ public class GameController : MonoBehaviour {
     {
         print("Time over, you lazy fool");
         requestEnds.Remove(unhappyCustomer);
+        CreatePlugGoal();
+    }
+
+    public void StartGameSinglePlayer()
+    {
+        InstantiatePlugs();
+        commandPanel.SetActive(true);
+        CreatePlugGoal();
+    }
+
+    public void StartGameMultiPlayer()
+    {
         CreatePlugGoal();
     }
 }
