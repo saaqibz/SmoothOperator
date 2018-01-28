@@ -7,11 +7,11 @@ namespace Assets.scripts
 {
     class Coordinate
     {
+        static Random rand = new Random(); // because creating multiple Randoms in quick succession gives them the seed value. We tend to make two of these at once.
         public int x;
         public int y;
         public Coordinate()
         {
-            var rand = new Random();
             x = rand.Next(0,3);
             y = rand.Next(0,3);
         }
@@ -35,6 +35,11 @@ namespace Assets.scripts
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public String CoordString()
+        {
+            return ("[" + x + ", " + y + "]");
         }
     }
 }
