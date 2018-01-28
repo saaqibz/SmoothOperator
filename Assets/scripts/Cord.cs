@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Cord : MonoBehaviour {
 
     private Transform startPos;
     private Transform endPos;
 
-    private Transform transform;
-
 	// Use this for initialization
 	void Start () {
-        transform = GetComponent<Transform>();		
-	}
+        gameObject.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -72,15 +68,13 @@ public class Cord : MonoBehaviour {
 
     private void drawCord(Vector3 start, Vector3 end)
     {
-        start.z = -0.7f;
-        end.z = -0.7f;
+        start.z = 2.363f;
+        end.z = 2.363f;
 
         transform.position = Vector3.Lerp(start, end, .5f);
         transform.LookAt(end);
-        transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y,
+        transform.localScale = new Vector3(transform.localScale.x, 0.05f,
             Vector3.Distance(start, end) * 0.95f);
     }
 
-
-    // HAHAHAHAHAH ALL YOUR MERGE ERRORS ARE BELONG TO ME!!!!!!!!!!111!1!!11!!11!!1!1!1!
 }

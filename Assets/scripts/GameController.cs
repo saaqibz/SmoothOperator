@@ -1,5 +1,4 @@
 ﻿using Assets.scripts;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ public class GameController : MonoBehaviour {
 	public float colSpace;
 	public float rowSpace;
 
-	private GameObject[,] plugGrid = new GameObject[NUM_COLS, NUM_ROWS];
 	private GameObject startPlug;
 	private GameObject endPlug;
 
@@ -19,50 +17,62 @@ public class GameController : MonoBehaviour {
 
     private List<PlugEnds> requestEnds;
 
+    private List<GameObject> plugs = new List<GameObject>();
+
     // Use this for initialization
     void Start () {
 		InstantiatePlugs ();
 	}
 
+    private void shouldShowPlug(GameObject plug, bool show)
+    {
+        plug.GetComponent<MeshRenderer>().enabled = show;
+    }
+
 	private void InstantiatePlugs() {
 		for (var col = 0 ; col < NUM_COLS; ++col) {
 			for (var row = 0; row < NUM_ROWS; ++row) {
-				var position = new Vector3(-3.5f + colSpace * col, 3.5f + -1 * rowSpace * row, 0f);		
+				var position = new Vector3(-4.254f + colSpace * col, 3.223f + -1 * rowSpace * row, 2.571f);		
 				var plug = Instantiate(plugPrefab, position, Quaternion.Euler(90, 0, 0));
-				plug.GetComponent<Plug>().setPosition(col, row);
-				plugGrid [col,row] = plug;
+                shouldShowPlug(plug, false);
+                plug.GetComponent<Plug>().setPosition(col, row);
+                plugs.Add(plug);
 			}
 		}
     }
 
-    private void createPlugGoal()
+    private void CreatePlugGoal()
     {
         var goalPlug = new PlugEnds();
         requestEnds.Add(goalPlug);
     }
 
-    public void triggerPlug(GameObject plug) {
+    public void TriggerPlug(GameObject plug) {
 		if (plug == startPlug) {
 			startPlug = null;
+            shouldShowPlug(plug, false);
             cord.RemoveStart();
 		} else if (plug == endPlug) {
 			endPlug = null;
+            shouldShowPlug(plug, false);
             cord.RemoveEnd();
 		} else if (startPlug == null) {
 			startPlug = plug;
+            shouldShowPlug(plug, true);
             cord.SetStart(plug.transform);
 		} else if (endPlug == null) {
 			endPlug = plug;
+            shouldShowPlug(plug, true);
             cord.SetEnd(plug.transform);
 		} else {
             // Do nothing because both plugs are assigned
-            var plugs = toPlugEnds();
+            var plugs = ToPlugEnds();
             if (plugs != null)
             {
                 if (isValidTransmission(plugs))
                 {
                     requestEnds.Clear();
-                    createPlugGoal();
+                    CreatePlugGoal();
                 }
             }
 
@@ -75,11 +85,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update () {}
 
-    private PlugEnds toPlugEnds()
+    private PlugEnds ToPlugEnds()
     {
         return new PlugEnds(startPlug.GetComponent<Plug>().getCol(),
             startPlug.GetComponent<Plug>().getRow(),

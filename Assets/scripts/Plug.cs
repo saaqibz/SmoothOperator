@@ -23,7 +23,7 @@ public class Plug : MonoBehaviour {
 
 	void OnMouseDown(){
 		// this object was clicked - do something
-		gameController.GetComponent<GameController>().triggerPlug(gameObject);
+		gameController.GetComponent<GameController>().TriggerPlug(gameObject);
 	}
 
 	public void setPosition(int x, int y) {
