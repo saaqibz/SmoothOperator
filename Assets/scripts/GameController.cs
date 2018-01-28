@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour {
     void Start () {
         requestEnds = new List<PlugEnds>();
 		InstantiatePlugs ();
-        createPlugGoal();
+        CreatePlugGoal();
 	}
 
     private void shouldShowPlug(GameObject plug, bool show)
@@ -50,27 +50,26 @@ public class GameController : MonoBehaviour {
         requestEnds.Add(goalPlug);
     }
 
-    public void TriggerPlug(GameObject plug) {
-		if (plug == startPlug) {
-			startPlug = null;
-            shouldShowPlug(plug, false);
+    public void TriggerPlug(GameObject plug)
+    { // was GameObject instead of Plug
+        if (plug == startPlug)
+        {
+            startPlug = null;
             cord.RemoveStart();
-		} else if (plug == endPlug) {
-			endPlug = null;
-            shouldShowPlug(plug, false);
+        }
+        else if (plug == endPlug)
+        {
+            endPlug = null;
             cord.RemoveEnd();
-		} else if (startPlug == null) {
-			startPlug = plug;
-            shouldShowPlug(plug, true);
-            cord.SetStart(plug.transform);
-		} else if (endPlug == null) {
-			endPlug = plug;
-            shouldShowPlug(plug, true);
-            cord.SetEnd(plug.transform);
-		} else {
-            // Do nothing because both plugs are assigned
-            var plugs = ToPlugEnds();
-            if (plugs != null)
+        }
+        else if (!(startPlug != null && endPlug != null)) // i.e. only one plug is null and we're about to finish a connection
+        {
+            if (startPlug == null)
+            {
+                startPlug = plug;
+                cord.SetStart(plug.transform);
+            }
+            else // endPlug == null; there's no other option
             {
                 endPlug = plug;
                 cord.SetEnd(plug.transform);
@@ -79,7 +78,7 @@ public class GameController : MonoBehaviour {
             // connection is completed, let's see if the player got it right...
             if (startPlug != null && endPlug != null) // !(plugs == null) will always return true
             {
-                var plugs = toPlugEnds();
+                var plugs = ToPlugEnds();
                 if (isValidTransmission(plugs))
                 {
                     print("Well done.");
@@ -95,14 +94,14 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        
-		var _startPlug = (startPlug != null) ? startPlug.GetComponent<Plug> ().ToString () : "null";
-		var _endPlug = (endPlug != null) ? endPlug.GetComponent<Plug> ().ToString () : "null";
-		Debug.Log ("startPlug: " + _startPlug + "| endPlug: " + _endPlug);
-	}
 
-	// Update is called once per frame
-	void Update () {}
+        var _startPlug = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
+        var _endPlug = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
+        Debug.Log("startPlug: " + _startPlug + "| endPlug: " + _endPlug);
+    }
+
+    // Update is called once per frame
+    void Update () {}
 
     private PlugEnds ToPlugEnds()
     {
