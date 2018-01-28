@@ -120,6 +120,7 @@ public class GameController : MonoBehaviour {
                 {
                     var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
                     var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
+                    GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
                     print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
                 }
             }
@@ -168,7 +169,11 @@ public class GameController : MonoBehaviour {
     {
         print("Time over, you lazy fool");
         requestEnds.Remove(unhappyCustomer);
-        CreatePlugGoal();
+        if (rand.Next(0,1000) == 69)
+        {
+            GameOver("You have died of dysentery");
+        }
+        GameOver("You ran out of time. Martha couldn't order her pizza and starved to death.");
     }
 
     public void StartGameSinglePlayer()
@@ -203,6 +208,16 @@ public class GameController : MonoBehaviour {
 
     public void GameOver(string message)
     {
-
+        gameOverText.text = message;
+        gameOverPanel.SetActive(true);
+        commandPanel.SetActive(false);
+        foreach(GameObject plug in plugs)
+        {
+            Destroy(plug);
+        }
+        foreach(CallRequest request in requestEnds)
+        {
+            Destroy(request.gameObject);
+        }
     }
 }

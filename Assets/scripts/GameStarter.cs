@@ -7,6 +7,8 @@ public class GameStarter : MonoBehaviour {
 
     public bool singlePlayerBool = false;
 
+    public int countdownTime = 3;
+
     private float startTime;
     private GameController gameController;
 
@@ -14,7 +16,7 @@ public class GameStarter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        startTime = Time.time + 3f;
+        startTime = Time.time + countdownTime;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 	}
 	
