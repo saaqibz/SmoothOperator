@@ -30,7 +30,6 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         requestEnds = new List<CallRequest>();
-		InstantiatePlugs ();
 
         rowSyms = new char[] { '1', '2', '3', '4' };
         colSyms = new char[] { 'A', 'B', 'C', 'D' };
