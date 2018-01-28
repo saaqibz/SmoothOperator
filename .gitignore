@@ -32,3 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+/Assets/scripts/.vs/slnx.sqlite
+*.cs.meta
