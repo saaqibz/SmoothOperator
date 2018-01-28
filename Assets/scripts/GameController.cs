@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
     public GameObject commandPanel;
     public GameObject gameOverPanel;
     public Text gameOverText;
+	private int score = 0;
 
     // Text Shit
     public GameObject topLabel;
@@ -111,18 +112,7 @@ public class GameController : MonoBehaviour {
             if (startPlug != null && endPlug != null) // !(plugs == null) will always return true
             {
                 var plugs = ToPlugEnds();
-                if (isValidTransmission(plugs))
-                {
-                    print("Well done.");
-                    CreatePlugGoal();
-                }
-                else
-                {
-                    var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
-                    var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
-                    GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
-                    print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
-                }
+				tryTransmission (plugs);
             }
         }
 
@@ -142,28 +132,38 @@ public class GameController : MonoBehaviour {
             endPlug.GetComponent<Plug>().getCol(),
             endPlug.GetComponent<Plug>().getRow());
     }
+
+	private IEnumerator<WaitForSeconds> removeBothPlugs() {
+		yield return new WaitForSeconds(1);
+		TriggerPlug (startPlug);
+		TriggerPlug (endPlug);
+	}
     
-
-    /*
-     * Validate a plugging attempt. If this is valid, we need to let the world know that someone succeeded.
-     *      If it is not valid, do nothing.
-     *      
-     */
-    private bool isValidTransmission(PlugEnds attemptedPlugCoordinates)
-    {
-        foreach (CallRequest curRequest in requestEnds)
-        {
-            if (curRequest.getSolution().Equals(attemptedPlugCoordinates))
-            {
-                curRequest.CompleteCall();
-                return true;
-            }
-
-            // to do: remove curPlugCoordinate, kill the CallRequest UI element.
-            // and play a ding ding sound
-        }
-        return false;
-    }
+	private bool tryTransmission(PlugEnds attemptedPlugCoordinates) {
+		foreach (CallRequest curRequest in requestEnds)
+		{
+			if (curRequest.getSolution().Equals(attemptedPlugCoordinates))
+			{
+				var waitTime = curRequest.CompleteCall();
+				print("Well done.");
+				score += Mathf.FloorToInt(1f + 5 * waitTime);
+				CreatePlugGoal();
+				StartCoroutine(removeBothPlugs ());
+				Debug.Log (score);
+			}
+			else
+			{
+				var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
+				var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
+				GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
+				print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+			}
+				
+			// to do: remove curPlugCoordinate, kill the CallRequest UI element.
+			// and play a ding ding sound
+		}
+		return false;
+	}
 
     public void TimeOver(CallRequest unhappyCustomer)
     {

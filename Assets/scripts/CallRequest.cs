@@ -59,10 +59,12 @@ public class CallRequest : MonoBehaviour {
         // should implement wait timer freezing while call is connected?
 	}
 
-    public void CompleteCall()
+	/** Destroys instruction and returns wait time */
+    public float CompleteCall()
     {
         // make it go Ding
         Destroy(gameObject);
+		return waitTime;
     }
 
     private void TimeOver()
