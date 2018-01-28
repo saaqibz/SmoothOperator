@@ -164,7 +164,6 @@ GameObject:
   - component: {fileID: 23056768058273940}
   - component: {fileID: 114429582257224248}
   - component: {fileID: 114324629068462348}
-  - component: {fileID: 114175014943019452}
   m_Layer: 0
   m_Name: PlugGroup
   m_TagString: Untagged
@@ -1223,38 +1222,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightColor: {r: 0.2827587, g: 0, b: 1, a: 0}
---- !u!114 &114175014943019452
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1280484365101958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 187
-    i1: 27
-    i2: 225
-    i3: 244
-    i4: 82
-    i5: 29
-    i6: 220
-    i7: 164
-    i8: 186
-    i9: 53
-    i10: 247
-    i11: 79
-    i12: 84
-    i13: 107
-    i14: 27
-    i15: 108
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
 --- !u!114 &114187409772094196
 MonoBehaviour:
   m_ObjectHideFlags: 1
