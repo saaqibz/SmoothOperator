@@ -7,7 +7,14 @@ public class GameController : MonoBehaviour {
 	private const int NUM_ROWS = 4;
 
 	public GameObject plugPrefab;
-	public float colSpace;
+    public GameObject callPanelPrefab;
+
+    // symbols for the rows and columns
+    public char[] rowSyms;
+    public char[] colSyms;
+
+    // x- and y-spacing for the plugs
+    public float colSpace;
 	public float rowSpace;
 
 	private GameObject startPlug;
@@ -23,8 +30,10 @@ public class GameController : MonoBehaviour {
     void Start () {
         requestEnds = new List<PlugEnds>();
 		InstantiatePlugs ();
-        CreatePlugGoal();
-	}
+
+        rowSyms = new char[] { '1', '2', '3', '4' };
+        colSyms = new char[] { 'A', 'B', 'C', 'D' };
+    }
 
     private void ShouldShowPlug(GameObject plug, bool show)
     {
