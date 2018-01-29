@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class Cord : MonoBehaviour {
-    private const float CORD_Z_AXIS = 2.363f;
+    private const float CORD_Z_AXIS = 1.6f;
 
     private Transform startPos;
     private Transform endPos;
@@ -11,12 +11,11 @@ public class Cord : MonoBehaviour {
         gameObject.SetActive(false);
     }
 	
-    private Vector3 getMousePosition()
+    private Vector3 GetMousePosition()
     {
-        var boardCenterPos = new Vector3(-0.127f, 4.512f, CORD_Z_AXIS);
+        var boardCenterPos = new Vector3(0f, 0f, CORD_Z_AXIS);
 
-        // FIXME: Need to fix plane or something about this script to properly get the mouse position
-        Plane plane = new Plane(boardCenterPos, 0);
+        Plane plane = new Plane(new Vector3(0,0,-1), boardCenterPos);
 
         float dist;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -31,8 +30,8 @@ public class Cord : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
-        var mousePos = getMousePosition();
+    void Update () {
+        var mousePos = GetMousePosition();
         // Debug.Log("Mouse: " + mousePos);
 
         if (startPos == null && endPos == null)
@@ -41,15 +40,15 @@ public class Cord : MonoBehaviour {
         }
         else if (startPos == null)
         {
-            drawCord(endPos.position, mousePos);
+            DrawCord(endPos.position, mousePos);
         }
         else if (endPos == null)
         {
-            drawCord(startPos.position, mousePos);
+            DrawCord(startPos.position, mousePos);
         }
         else
         {
-            drawCord(startPos.position, endPos.position);
+            DrawCord(startPos.position, endPos.position);
         }
 
     }
@@ -58,12 +57,6 @@ public class Cord : MonoBehaviour {
     {
         startPos = start;
         gameObject.SetActive(true);
-        /*
-        Vector3 pos = startPos.position;
-        Debug.Log("startPos is (" + pos.x + "," + pos.y + "," + pos.z + ")");
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log("mousePos is (" + mousePos.x + "," + mousePos.y + "," + mousePos.z + ")");
-        */
     }
 
     public void SetEnd(Transform end)
@@ -90,14 +83,14 @@ public class Cord : MonoBehaviour {
         }
     }
 
-    private void drawCord(Vector3 start, Vector3 end)
+    private void DrawCord(Vector3 start, Vector3 end)
     {
         start.z = CORD_Z_AXIS;
         end.z = CORD_Z_AXIS;
 
         transform.position = Vector3.Lerp(start, end, .5f);
         transform.LookAt(end);
-        transform.localScale = new Vector3(transform.localScale.x, 0.05f,
+        transform.localScale = new Vector3(0.1f, 0.1f,
             Vector3.Distance(start, end));
     }
 
