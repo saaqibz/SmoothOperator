@@ -1,0 +1,5 @@
+Wishlist
+- Multiple requests at once
+- Drag + let go to connect cord (as opposed to or in addition to two clicks)
+- Multiple Game Over quotes and messages
+- 
