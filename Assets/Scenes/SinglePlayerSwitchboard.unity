@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42996112, g: 0.4646579, b: 0.49593723, a: 1}
+  m_IndirectSpecularColor: {r: 0.42996144, g: 0.46465814, b: 0.4959377, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singlePlayerBool: 1
-  countdownTime: 1
+  countdownTime: 3
   countText: {fileID: 1093155502}
 --- !u!1 &248412896
 GameObject:
@@ -1395,7 +1395,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.05
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
