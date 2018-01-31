@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour {
     public Text scoreText;
     public Text gameOverText;
 	private int score = 0;
-    public Fuckup bad_thing_happened;
+    public Fuckup errorHolder;
 
     // Text Shit
     public GameObject topLabel;
@@ -40,6 +40,9 @@ public class GameController : MonoBehaviour {
 
     static System.Random rand = new System.Random();
 
+    public float startCallTime = 17.5f;
+    private float curCallTime;
+
     // Use this for initialization
     void Start () {
         requestEnds = new List<CallRequest>();
@@ -51,6 +54,7 @@ public class GameController : MonoBehaviour {
         leftLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
         rightLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
 
+        curCallTime = startCallTime;
     }
 
     private void ShouldShowPlug(GameObject plug, bool show)
@@ -82,7 +86,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void TriggerPlug(GameObject plug)
-    { // was GameObject instead of Plug
+    {
+        // removing plugs
         if (plug == startPlug)
         {
             startPlug = null;
@@ -95,7 +100,9 @@ public class GameController : MonoBehaviour {
             ShouldShowPlug(plug, false);
             cord.RemoveEnd();
         }
-        else if (!(startPlug != null && endPlug != null)) // i.e. only one plug is null and we're about to finish a connection
+
+        // only one plug is null and we're about to finish a connection
+        else if (!(startPlug != null && endPlug != null)) 
         {
             if (startPlug == null)
             {
@@ -111,7 +118,7 @@ public class GameController : MonoBehaviour {
             }
 
             // connection is completed, let's see if the player got it right...
-            if (startPlug != null && endPlug != null) // !(plugs == null) will always return true
+            if (startPlug != null && endPlug != null)
             {
                 var plugs = ToPlugEnds();
 				tryTransmission (plugs);
@@ -152,23 +159,22 @@ public class GameController : MonoBehaviour {
 				score += Mathf.FloorToInt(10f + 50 * waitTime);
                 scoreText.text = "Score: " + score;
 				CreatePlugGoal();
-				StartCoroutine(removeBothPlugs ());
-				Debug.Log (score);
+                return true;
 			}
-			else
-			{
-				var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
-				var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
-                print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
-                bad_thing_happened.gameObject.SetActive(true);
-                bad_thing_happened.DisplayFuckup(attemptedPlugCoordinates, curRequest.getSolution(), colSyms, rowSyms);
-                GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
-			}
-				
-			// to do: remove curPlugCoordinate, kill the CallRequest UI element.
-			// and play a ding ding sound
-		}
-		return false;
+
+            // to do: remove curPlugCoordinate
+            // and play a ding ding sound
+        }
+
+        // if we've gone through all of the open requestEnds, fail the game.
+
+        var startString = (startPlug != null) ? startPlug.GetComponent<Plug>().ToString() : "null";
+        var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
+        print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
+        errorHolder.gameObject.SetActive(true);
+        errorHolder.DisplayFuckup(attemptedPlugCoordinates, requestEnds[0].getSolution(), colSyms, rowSyms);
+        GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
+        return false;
 	}
 
     public void TimeOver(CallRequest unhappyCustomer)

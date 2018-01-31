@@ -1656,7 +1656,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Your Target Was:'
+  m_Text: 'Top Call Request Was:'
 --- !u!222 &785122840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2656,7 +2656,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 148264963}
   scoreText: {fileID: 890950632}
   gameOverText: {fileID: 731381898}
-  bad_thing_happened: {fileID: 1776357614}
+  errorHolder: {fileID: 1776357614}
   topLabel: {fileID: 2069163057}
   leftLabel: {fileID: 762299936}
   rightLabel: {fileID: 2013498852}
@@ -2665,6 +2665,7 @@ MonoBehaviour:
   colSpace: 1.89
   rowSpace: 1.51
   cord: {fileID: 24560211}
+  startCallTime: 17.5
 --- !u!4 &1869630017
 Transform:
   m_ObjectHideFlags: 0
