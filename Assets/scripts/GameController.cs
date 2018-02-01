@@ -7,16 +7,24 @@ public class GameController : MonoBehaviour {
 	private const int NUM_COLS = 4;
 	private const int NUM_ROWS = 4;
 
-	public GameObject plugPrefab;
-    public GameObject callPanelPrefab;
+    [Header("UI Panels")]
     public GameObject commandPanel;
     public GameObject gameOverPanel;
+    public GameObject startPanel;
+
+    [Header("Prefabs")]
+    public GameObject plugPrefab;
+    public GameObject callPanelPrefab;
+
+
     public Text scoreText;
-    public Text gameOverText;
+    public Text gameOverFlavorText;
+
 	private int score = 0;
+
     public Fuckup errorHolder;
 
-    // Text Shit
+    // Text on the game thing
     public GameObject topLabel;
     public GameObject leftLabel;
     public GameObject rightLabel;
@@ -34,18 +42,21 @@ public class GameController : MonoBehaviour {
 
     public Cord cord;
 
-    private List<CallRequest> requestEnds;
+    private List<CallRequest> activeRequests;
 
     private List<GameObject> plugs = new List<GameObject>();
 
     static System.Random rand = new System.Random();
 
-    public float startCallTime = 17.5f;
-    private float curCallTime;
+    public float startingPatience = 17.5f;
+    private float curPatience;
+
+    public float startingSpawnTime = 10.0f;
+    private float curSpawnTime;
 
     // Use this for initialization
     void Start () {
-        requestEnds = new List<CallRequest>();
+        activeRequests = new List<CallRequest>();
 
         rowSyms = GenerateCipher() ;
         colSyms = GenerateCipher();
@@ -54,7 +65,8 @@ public class GameController : MonoBehaviour {
         leftLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
         rightLabel.GetComponent<TextMesh>().text = rowSyms[0] + "\n" + rowSyms[1] + "\n" + rowSyms[2] + "\n" + rowSyms[3];
 
-        curCallTime = startCallTime;
+        curPatience = startingPatience;
+        curSpawnTime = startingSpawnTime;
     }
 
     private void ShouldShowPlug(GameObject plug, bool show)
@@ -74,15 +86,18 @@ public class GameController : MonoBehaviour {
 		}
     }
 
-    private void CreatePlugGoal()
+    private void GenerateRequest()
     {
         var goalPlug = new PlugEnds();
         print("Okay, now connect " + goalPlug.first.CoordString() + " to " + goalPlug.second.CoordString());
         GameObject newCallPanel = Instantiate(callPanelPrefab, commandPanel.transform);
         CallRequest call = newCallPanel.GetComponent<CallRequest>();
-        call.StartRequest(goalPlug, colSyms, rowSyms, 20f);
+        call.StartRequest(goalPlug, colSyms, rowSyms, curPatience);
 
-        requestEnds.Add(call);
+        activeRequests.Add(call);
+
+        Invoke("GenerateRequest", curSpawnTime);
+        curSpawnTime *= 0.9f;
     }
 
     public void TriggerPlug(GameObject plug)
@@ -149,16 +164,16 @@ public class GameController : MonoBehaviour {
 	}
     
 	private bool tryTransmission(PlugEnds attemptedPlugCoordinates) {
-		foreach (CallRequest curRequest in requestEnds)
+		foreach (CallRequest curRequest in activeRequests)
 		{
 			if (curRequest.getSolution().Equals(attemptedPlugCoordinates))
 			{
-                requestEnds.Remove(curRequest);
+                activeRequests.Remove(curRequest);
 				var waitTime = curRequest.CompleteCall();
 				print("Well done.");
 				score += Mathf.FloorToInt(10f + 50 * waitTime);
                 scoreText.text = "Score: " + score;
-				CreatePlugGoal();
+                curPatience *= 0.95f;
                 return true;
 			}
 
@@ -172,7 +187,8 @@ public class GameController : MonoBehaviour {
         var endString = (endPlug != null) ? endPlug.GetComponent<Plug>().ToString() : "null";
         print("You silly goose, look what you've done! You've connected " + startString + " and " + endString);
         errorHolder.gameObject.SetActive(true);
-        errorHolder.DisplayFuckup(attemptedPlugCoordinates, requestEnds[0].getSolution(), colSyms, rowSyms);
+        errorHolder.DisplayFuckup(attemptedPlugCoordinates, activeRequests[0].getSolution(), colSyms, rowSyms);
+        CancelInvoke("GenerateRequest");
         GameOver("You made a bad connection. Jimmy ended up calling his ex and now things are awkward.");
         return false;
 	}
@@ -180,7 +196,7 @@ public class GameController : MonoBehaviour {
     public void TimeOver(CallRequest unhappyCustomer)
     {
         print("Time over, you lazy fool");
-        requestEnds.Remove(unhappyCustomer);
+        activeRequests.Remove(unhappyCustomer);
         if (rand.Next(0,1000) == 69)
         {
             GameOver("You have died of dysentery");
@@ -192,12 +208,12 @@ public class GameController : MonoBehaviour {
     {
         InstantiatePlugs();
         commandPanel.SetActive(true);
-        CreatePlugGoal();
+        GenerateRequest();
     }
 
     public void StartGameMultiPlayer()
     {
-        CreatePlugGoal();
+        GenerateRequest();
     }
 
     public char[] GenerateCipher()
@@ -220,14 +236,14 @@ public class GameController : MonoBehaviour {
 
     public void GameOver(string message)
     {
-        gameOverText.text = message;
+        gameOverFlavorText.text = message;
         gameOverPanel.SetActive(true);
         commandPanel.SetActive(false);
         foreach(GameObject plug in plugs)
         {
             Destroy(plug);
         }
-        foreach(CallRequest request in requestEnds)
+        foreach(CallRequest request in activeRequests)
         {
             Destroy(request.gameObject);
         }

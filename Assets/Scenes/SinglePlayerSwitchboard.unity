@@ -2649,13 +2649,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298b8451694734aeebd58ec05a37fabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commandPanel: {fileID: 134198036}
+  gameOverPanel: {fileID: 148264963}
+  startPanel: {fileID: 227835510}
   plugPrefab: {fileID: 1792183463570224, guid: 16ce0f0b411d841d3af52d7319e67d7d, type: 2}
   callPanelPrefab: {fileID: 1431818836150318, guid: ee4be123dbeeb7547b8deac7987f52fe,
     type: 2}
-  commandPanel: {fileID: 134198036}
-  gameOverPanel: {fileID: 148264963}
   scoreText: {fileID: 890950632}
-  gameOverText: {fileID: 731381898}
+  gameOverFlavorText: {fileID: 731381898}
   errorHolder: {fileID: 1776357614}
   topLabel: {fileID: 2069163057}
   leftLabel: {fileID: 762299936}
@@ -2665,7 +2666,8 @@ MonoBehaviour:
   colSpace: 1.89
   rowSpace: 1.51
   cord: {fileID: 24560211}
-  startCallTime: 17.5
+  startingPatience: 17.5
+  startingSpawnTime: 10
 --- !u!4 &1869630017
 Transform:
   m_ObjectHideFlags: 0

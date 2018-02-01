@@ -69,11 +69,14 @@ public class CallRequest : MonoBehaviour {
 
     private void TimeOver()
     {
-        print("You took too long. Bad employee!");
         gameController.TimeOver(this);
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Returns the amount of time remaining to complete the call, as a float from 0 to 1
+    /// </summary>
+    /// <returns></returns>
     public float FractionOfTimeRemaining()
     {
         return (waitTime + countdownStartTime - Time.time) / waitTime;
